@@ -1,0 +1,5 @@
+package com.project.qa.web;
+
+public class QaController {
+
+}

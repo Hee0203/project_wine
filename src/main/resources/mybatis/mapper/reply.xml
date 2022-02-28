@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.reply.dao.IReplyDao">
+
+	<select id="getReplyCountByParent" parameterType="com.project.reply.vo.ReplySearchVO" resultType="int">
+		SELECT COUNT(*) 
+		FROM REPLY
+		WHERE RE_PARENT_NO = #{reParentNo}
+		<choose>
+			<when test="reCategory=='QA'"> AND RE_CATEGORY = 'QA'</when>
+			<when test="reCategory=='COMM'"> AND RE_CATEGORY = 'COMM'</when>
+		</choose>
+	</select>
+
+	<select id="getReplyListByParent" parameterType="com.project.reply.vo.ReplySearchVO" resultType="com.project.reply.vo.ReplyVO">
+		<include refid="common.prePage"/>		
+		SELECT RE_NO, RE_CATEGORY, RE_PARENT_NO, RE_MEM_ID, RE_CONTENT,
+				TO_CHAR(RE_REG_DATE,'YYYY-MM-DD HH:MM') AS RE_REG_DATE,
+				TO_CHAR(RE_MOD_DATE,'YYYY-MM-DD') AS RE_MOD_DATE,
+				RE_MEM_NAME
+		FROM REPLY A
+		WHERE RE_PARENT_NO = #{reParentNo}
+		<choose>
+			<when test="reCategory=='QA'"> AND RE_CATEGORY = 'QA'</when>
+			<when test="reCategory=='COMM'"> AND RE_CATEGORY = 'COMM'</when>
+		</choose>
+		ORDER BY RE_NO DESC
+		<include refid="common.postPage"/>
+	</select>
+
+	<select id="getReply" parameterType="int" resultType="com.project.reply.vo.ReplyVO">
+		SELECT * 
+		FROM REPLY
+		WHERE RE_NO = #{reNo}
+		<choose>
+			<when test="reCategory=='QA'"> AND RE_CATEGORY = 'QA'</when>
+			<when test="reCategory=='COMM'"> AND RE_CATEGORY = 'COMM'</when>
+		</choose>
+	</select>
+
+	<insert id="insertReply" parameterType="com.project.reply.vo.ReplyVO">
+
+		<choose>
+			<when test="reCategory=='QA'">
+				INSERT INTO REPLY VALUES(
+					'Q'||QA_RE_SEQ.NEXTVAL, 'QA', #{reParentNo}, #{reMemId},
+					#{reContent}, sysdate, SYSDATE, #{reMemName}
+				)
+			</when>
+			<when test="reCategory=='COMM'">
+				INSERT INTO REPLY VALUES(
+					'C'||COMM_RE_SEQ.NEXTVAL, 'COMM', #{reParentNo}, #{reMemId},
+					#{reContent}, sysdate, SYSDATE, NULL
+				)
+			</when>
+		</choose>
+	</insert>
+	
+	<update id="updateReply" parameterType="com.project.reply.vo.ReplyVO">
+		UPDATE REPLY SET
+		RE_CONTENT = #{reContent}	
+		WHERE RE_NO = #{reNo} 
+	</update>
+	
+	<delete id="deleteReply" parameterType="com.project.reply.vo.ReplyVO">
+		DELETE REPLY
+		WHERE RE_NO = #{reNo}
+		<choose>
+			<when test="reCategory=='QA'"> AND RE_CATEGORY = 'QA'</when>
+			<when test="reCategory=='COMM'"> AND RE_CATEGORY = 'COMM'</when>
+		</choose>
+	</delete>
+	
+
+</mapper>

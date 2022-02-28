@@ -1,0 +1,58 @@
+package com.project.main.web;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.project.member.vo.MemberVO;
+
+@Controller
+public class HomeController {
+	
+	@RequestMapping("/main/home.wow")
+	public String home() {
+		return "main/home";
+	}
+	
+	@RequestMapping(value="/main/crawling", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> crawling(Model model) throws IOException{
+		String url = "https://search.naver.com/search.naver?where=news&sm=tab_jum&query=%EC%99%80%EC%9D%B8";
+		Document doc = Jsoup.connect(url).get(); 
+		
+		Elements listNews = doc.getElementsByAttributeValue("class", "news_area");
+		Elements title = (Elements)listNews.select(".news_tit");
+		
+		Map<String,Object> newsList = new HashMap<String, Object>();
+		
+		List<String> titleList = new ArrayList<String>();
+		List<String> hrefList = new ArrayList<String>();
+		
+		for(Element e : title) {
+			System.out.println(e.attr("href"));
+			System.out.println(e.text());
+			
+			titleList.add(e.text());
+			hrefList.add(e.attr("href"));
+		}
+		newsList.put("href", hrefList);
+		newsList.put("title", titleList);
+		
+		model.addAttribute(newsList);
+		
+		return newsList;
+	}
+
+	
+}

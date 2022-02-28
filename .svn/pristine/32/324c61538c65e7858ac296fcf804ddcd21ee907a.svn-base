@@ -1,0 +1,69 @@
+
+.title {
+	background: black;
+	height: 80px;
+	margin-bottom: 20px;
+}
+.title > h3 {
+	text-align : center;
+	line-height : 80px;
+	color: #fff;
+	font-size: 40px;
+}
+
+.thead {
+	border-top:none solid 2px;
+	border-bottom: solid 2px;
+	
+}
+.text_continer {
+	border-bottom: solid 1px;
+}
+.tbody {
+	border-bottom: solid 2px;
+}
+.qa_title {
+	color: black;
+}
+.row11 {
+	padding-right: 65px;
+    text-align: right;
+    margin-bottom: 30px;
+    height: 50px !important;
+    padding-top: 10px;
+}
+.writer_button {
+	width: 100%;
+	height: 100px;
+}
+
+.row11 .button {
+/* 	border: solid 2px; */
+	border-radius: 10px;
+	text-align: center;
+	font-size: 15px;
+}
+.button {
+	color: white;
+	padding: 10px 10px 10px 10px;
+	background-color: black;
+}
+table {
+	width: 90%;
+	height: 500px;
+}
+
+/* 페이징 */
+
+
+
+
+
+
+
+
+
+
+
+
+

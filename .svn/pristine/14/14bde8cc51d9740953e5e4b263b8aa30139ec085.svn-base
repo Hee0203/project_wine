@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.member.dao.IMemberDao">
+
+<sql id="search">
+	<if test="!@org.apache.commons.lang3.StringUtils@isBlank(searchWord)">
+		<choose>
+			<when test='searchType=="ID"'>AND mem_id LIKE '%'||#{searchWord}||'%'</when>
+			<when test='searchType=="NM"'>AND mem_name LIKE '%'||#{searchWord}||'%'</when>
+		</choose>
+	</if>
+</sql>
+
+
+	<select id="getTotalRowCount"
+		parameterType="com.project.member.vo.MemberSearchVO" resultType="int">
+		SELECT
+		count(*)
+		FROM member
+		WHERE 1 = 1
+
+		<include refid="search"></include>
+
+	</select>
+
+<select id="getMemberList" parameterType="com.project.member.vo.MemberSearchVO" resultType="com.project.member.vo.MemberVO">
+	<include refid="common.prePage"></include>
+
+SELECT
+    mem_id,
+    mem_name,
+    mem_hp,
+    mem_mail,
+    to_char(mem_join,'YYYY/MM/DD')	as mem_join,
+    mem_del_yn
+FROM
+    member
+WHERE
+	mem_id not like '%user%'
+<include refid="search"></include>
+ORDER by mem_Id desc
+<include refid="common.postPage"></include>
+
+
+</select>
+
+<select id="getMember" resultType="com.project.member.vo.MemberVO" parameterType="String">
+SELECT
+    mem_id,
+    mem_pass,
+    mem_name,
+    to_char(mem_bir,'YY-MM-DD') AS mem_bir,
+    mem_hp,
+    mem_zip,
+    mem_add1,
+    mem_add2,
+    mem_mail,
+    mem_drink,
+    mem_ann,
+    mem_join
+FROM
+    member
+WHERE 
+	mem_id=#{memId}
+
+</select>
+
+<update id="updateMember" parameterType="com.project.member.vo.MemberVO">
+UPDATE member SET
+    mem_pass=#{memPass},
+    mem_name=#{memName},
+    mem_bir=#{memBir},
+    mem_hp=#{memHp},
+    mem_zip=#{memZip},
+    mem_add1=#{memAdd1},
+    mem_add2=#{memAdd2},
+    mem_mail=#{memMail},
+    mem_drink=#{memDrink},
+    mem_ann=#{memAnn}
+WHERE
+    mem_id=#{memId}
+
+
+
+
+</update>
+
+<delete id="deleteMember" parameterType="com.project.member.vo.MemberVO">
+		UPDATE member SET
+		mem_del_yn='Y'
+		WHERE mem_id=#{memId}
+
+
+</delete>
+
+<insert id="insertMember" parameterType="com.project.member.vo.MemberVO" >
+INSERT INTO member VALUES(
+#{memId}, #{memPass}, #{memName}, #{memBir}, #{memHp}
+, #{memZip}, #{memAdd1}, #{memAdd2}, #{memMail}
+, #{memDrink}, #{memAnn}, sysdate, 'N', 'MEMBER'
+
+)
+
+</insert>
+
+
+
+
+
+
+
+
+</mapper>

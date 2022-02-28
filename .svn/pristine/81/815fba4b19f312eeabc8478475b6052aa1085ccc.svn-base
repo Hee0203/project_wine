@@ -1,0 +1,27 @@
+package com.project.member.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.project.member.vo.MemberVO;
+
+@Controller
+public class JoinController {
+	
+	@RequestMapping("/join/step1.wow")
+	public String step1(@ModelAttribute("member") MemberVO member) {
+		return "/join/step1";
+	}
+	
+	@RequestMapping("/join/step2.wow")
+	public String step2(@ModelAttribute("member") MemberVO member) {
+		return "/join/step2";
+	}
+	
+	@RequestMapping("/join/step3.wow")
+	public String step3(@ModelAttribute("member") MemberVO member) {
+		return "join/step3";
+	}
+	
+}

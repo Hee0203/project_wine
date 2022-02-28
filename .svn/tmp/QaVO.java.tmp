@@ -1,0 +1,150 @@
+<<<<<<< .mine
+package com.project.qa.vo;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+public class QaVO {
+	private int qaNo;                    	/* 질의 글 번호*/      
+	private String qaTitle;                /* 질의 글 제목*/        
+	private String qaWriter;               /* 질의 글 작성자*/       
+	private String qaPass;                 /* 질의 글 비밀번호*/      
+	private String qaContent;              /* 질의 글 내용 */       
+	private String qaRegDate;              /* 질의 글 등록 시간 */    
+	private String qaModDate;              /* 질의 글 수정 시간 */    
+	private int qaHit;                     /* 질의 글 조회수*/       
+	private String qaDelYn;                /* 질의 글 삭제여부*/
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,ToStringStyle.MULTI_LINE_STYLE);
+	}
+	public int getQaNo() {
+		return qaNo;
+	}
+	public void setQaNo(int qaNo) {
+		this.qaNo = qaNo;
+	}
+	public String getQaTitle() {
+		return qaTitle;
+	}
+	public void setQaTitle(String qaTitle) {
+		this.qaTitle = qaTitle;
+	}
+	public String getQaWriter() {
+		return qaWriter;
+	}
+	public void setQaWriter(String qaWriter) {
+		this.qaWriter = qaWriter;
+	}
+	public String getQaPass() {
+		return qaPass;
+	}
+	public void setQaPass(String qaPass) {
+		this.qaPass = qaPass;
+	}
+	public String getQaContent() {
+		return qaContent;
+	}
+	public void setQaContent(String qaContent) {
+		this.qaContent = qaContent;
+	}
+	public String getQaRegDate() {
+		return qaRegDate;
+	}
+	public void setQaRegDate(String qaRegDate) {
+		this.qaRegDate = qaRegDate;
+	}
+	public String getQaModDate() {
+		return qaModDate;
+	}
+	public void setQaModDate(String qaModDate) {
+		this.qaModDate = qaModDate;
+	}
+	public int getQaHit() {
+		return qaHit;
+	}
+	public void setQaHit(int qaHit) {
+		this.qaHit = qaHit;
+	}
+	public String getQaDelYn() {
+		return qaDelYn;
+	}
+	public void setQaDelYn(String qaDelYn) {
+		this.qaDelYn = qaDelYn;
+	}      
+	
+	
+	
+}
+||||||| .r0
+=======
+package com.project.qa.vo;
+
+public class QaVO {
+	private int qaNo;                       
+	private String qaTitle;                 
+	private String qaWriter;                
+	private String qaPass;                  
+	private String qaContent;               
+	private String qaRegDate;               
+	private String qaModDate;               
+	private int qaHit;                      
+	private String qaDelYn;
+	
+	public int getQaNo() {
+		return qaNo;
+	}
+	public void setQaNo(int qaNo) {
+		this.qaNo = qaNo;
+	}
+	public String getQaTitle() {
+		return qaTitle;
+	}
+	public void setQaTitle(String qaTitle) {
+		this.qaTitle = qaTitle;
+	}
+	public String getQaWriter() {
+		return qaWriter;
+	}
+	public void setQaWriter(String qaWriter) {
+		this.qaWriter = qaWriter;
+	}
+	public String getQaPass() {
+		return qaPass;
+	}
+	public void setQaPass(String qaPass) {
+		this.qaPass = qaPass;
+	}
+	public String getQaContent() {
+		return qaContent;
+	}
+	public void setQaContent(String qaContent) {
+		this.qaContent = qaContent;
+	}
+	public String getQaRegDate() {
+		return qaRegDate;
+	}
+	public void setQaRegDate(String qaRegDate) {
+		this.qaRegDate = qaRegDate;
+	}
+	public String getQaModDate() {
+		return qaModDate;
+	}
+	public void setQaModDate(String qaModDate) {
+		this.qaModDate = qaModDate;
+	}
+	public int getQaHit() {
+		return qaHit;
+	}
+	public void setQaHit(int qaHit) {
+		this.qaHit = qaHit;
+	}
+	public String getQaDelYn() {
+		return qaDelYn;
+	}
+	public void setQaDelYn(String qaDelYn) {
+		this.qaDelYn = qaDelYn;
+	}       
+	
+}
+>>>>>>> .r6

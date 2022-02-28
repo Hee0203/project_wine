@@ -1,0 +1,74 @@
+.filter_div {
+	/* float: left; */
+	/* display: flex; */
+}
+/* .filter {
+	text-align: center;
+}
+.filter_top {
+	display: block;
+	padding-top: 20px;
+	padding-bottom: 10px;
+}
+
+#filter_id {
+	margin-left : 130px;
+	border: solid 1px;
+}
+
+.wine_cd_box {
+	padding-top: 30px;
+} */
+#all_box {
+	width: 85%;
+}
+#filter_id {
+	border: solid 1px;
+	width : 85%
+	/* display: flex; */
+}
+.filter {
+	padding-top: 20px;
+/* 	width: 85%; */
+	display: flex;
+	margin-left: 60px;
+}
+#span_id {
+	
+}
+
+.wine_cd_box, .wine_price_box{
+	display: flex;
+	/* padding-top: 15px; */
+	padding-left: 100px; 
+	padding-right: 100px;
+}
+
+
+#wine_cd {
+	padding-left: 70px;
+}
+#wine_price {
+	padding-left: 128px;
+}
+
+/* #wine_cd > label {
+	padding-left: 30px;
+	padding-right: 30px;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

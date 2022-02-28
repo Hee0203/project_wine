@@ -1,0 +1,187 @@
+h3{
+	background: black;
+	color: #fff;
+	height: 90px;
+	padding-top: 30px;	
+}
+.container1{
+	height: 200px;
+} 
+
+table {
+	width:100%;
+	height: 400px;
+	margin-top: 10px;
+}
+
+table .title {
+	height: 30px;
+}
+
+table .cont {
+	height: 300px;
+}
+
+#btn_home{
+	text-align: right;
+}
+#id_reply_list_area{
+	text-align: left;
+}
+
+#reply_list_area{
+	text-align: left;
+}
+
+
+.form-group{
+	text-align: left;
+	margin-left:30px;
+	margin-bottom:5px;
+	padding-top: 13px;
+	display: flex;
+}
+
+
+.form-group label{
+	margin-top : 15px;
+	font-size: 20px;
+	font-weight: bold;
+	margin-right:20px;
+}
+
+#write_reply{
+	margin-top:10px;
+	background: #f5f5f5;
+}
+
+#re_reMemId, #re_reContent, #re_reRegDate{
+	margin-top:5px;
+}
+
+#re_reContent{
+	font-size:20px;
+}
+
+#re_reMemId{
+	font-weight: bold;
+	font-size:14px;
+}
+
+#re_reRegDate{
+	font-size: 13px;
+	margin-left: 10px;
+}
+textarea{
+	width:480%;
+	height:70px;
+}
+
+#btn_reply_regist{
+	margin-left:800px;
+	height: 70px;
+	width: 100px;
+	background: #a40000;
+	border-radius: 5px;
+	border: none;
+	color: white;
+	font-size: 15px;
+}
+#reply_div{
+	border-top: solid 1px;
+}
+#reply_div:last-child{
+	border-bottom: solid 1px;
+}
+
+#btn_reply_edit, #btn_reply_delete{
+	margin-bottom: 10px;
+}
+
+#wrap_div{
+	display: flex;
+}
+
+#btn_reply_edit{
+	background: white;
+}
+
+#btn_reply_delete{
+	color: black;
+	background: white;
+}
+
+#reply_br{
+	display:block;
+	height:10px;
+	width:100%;
+	color:#fff;
+}
+
+#reply_div_qa{
+	margin-top: 30px;
+}
+
+#reply_div_qa:not(:first-child){
+	border-top: solid 1px;
+	
+}
+
+#reply_text{
+	width:90%;
+}
+
+#reply_edit_modal{
+	margin-top: 300px;
+}
+
+#btn_reply_x, #btn_reply_close{
+	color: white;
+	background: #a40000;
+	border: none;
+	float: left;
+	border-radius: 5px;
+	box-shadow: 3px 3px 3px black;
+	transition-duration: 0.3s;
+}
+#btn_reply_modify{
+	color:white;
+	background: green;
+	border: none;
+	float: left;
+	border-radius: 5px;
+	box-shadow: 2px 2px 2px black;
+	transition-duration: 0.3s;	
+}
+#btn_reply_x:active, #btn_reply_modify:active, #btn_reply_close:active{
+	margin-left: 2px;
+	margin-down: 2px;
+	box-shadow:none;
+}
+
+#id_reply_list_more{
+	display: flex;
+}
+#down_arrow{
+	height:15px;
+	width:15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

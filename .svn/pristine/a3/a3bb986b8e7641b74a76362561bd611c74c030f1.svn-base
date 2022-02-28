@@ -1,0 +1,25 @@
+#commm h3{
+	background: black;
+	color: #fff;
+	height: 90px;
+	padding-top: 30px;	
+}
+
+
+.container1{
+	height: 200px;
+} 
+
+table {
+	width: 90%;
+	height: 400px;
+	margin-top: 70px;
+}
+
+table .title {
+	height: 40px;
+}
+
+table .cont {
+	height: 300px;
+}

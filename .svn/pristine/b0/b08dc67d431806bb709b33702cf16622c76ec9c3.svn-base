@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.comm.dao.ICommDao">
+
+<sql id="search">
+<if test="@org.apache.comm.long3.StringUtils@isBlank(searchword)">
+	<choose>
+		<when test="searchType=='T'"> AND comm_title LIKE '%'||#{searchword}||'%'</when>
+		<when test="searchType=='W'"> AND comm_write LIKE '%'||#{searchword}||'%'</when>  
+		<when test="searchType=='C'"> AND comm_content LIKE '%'||#{searchword}||'%'</when>    
+	</choose>
+</if>
+</sql>
+
+<select id="getTotalRowCount"
+ parameterType="com.project.comm.vo.CommSearchVO" resultType="int">
+SELECT COUNT(*)
+FROM comm
+WHERE 1=1
+<include refid="search"/>
+
+</select>
+
+<select id="getCommList" resultType="com.project.comm.vo.CommVO">
+SELECT *
+FROM COMM
+</select>
+
+
+
+</mapper>

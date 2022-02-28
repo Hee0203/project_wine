@@ -1,0 +1,61 @@
+package com.project.member.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import com.project.exception.BizDuplicateKeyException;
+import com.project.exception.BizNotEffectedException;
+import com.project.exception.BizNotFoundException;
+import com.project.member.dao.IMemberDao;
+import com.project.member.vo.MemberSearchVO;
+import com.project.member.vo.MemberVO;
+
+@Service
+public class MemberServiceImpl implements IMemberService{
+
+	@Inject
+	IMemberDao memberDao;
+	
+	@Override
+	public List<MemberVO> getMemberList() {
+		
+		
+		return memberDao.getMemberList();
+	}
+
+	@Override
+	public MemberVO getMember(String memId) throws BizNotFoundException {
+		// DAO에서 member조회
+		// member가 없으면 BizNotFoundException 던지기
+		// 그 외는 해당 member return
+		MemberVO vo = memberDao.getMember(memId);
+		if(vo == null) {
+			throw new BizNotFoundException();
+		}
+		
+		return vo;
+	}
+
+	@Override
+	public void modifyMember(MemberVO member) throws BizNotEffectedException, BizNotFoundException {
+		
+	}
+
+	@Override
+	public void removeMember(MemberVO member) throws BizNotEffectedException, BizNotFoundException {
+
+		
+	}
+
+	@Override
+	public void registMember(MemberVO member) throws BizNotEffectedException, BizDuplicateKeyException {
+
+		
+	}
+	
+	
+
+}

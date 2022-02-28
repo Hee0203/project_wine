@@ -1,0 +1,44 @@
+<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<%@include file="/WEB-INF/inc/header.jsp" %>
+</head>
+<body>
+
+	<!-- search -->	
+	<div id="search">
+		<form action="" >
+			<input type="text" id="search_span" name="search_span" value="" placeholder="search">
+			<span>검색</span>
+		</form>
+	</div>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>제목</th>		
+				<th>작성자</th>
+				<th>등록일</th>
+			</tr>		
+		</thead>
+		<tbody>
+			<c:forEach items="${commList }" var="comm">
+				<tr>
+					<td>${comm.commNo }</td>
+					<td>${comm.commTitle }</td>
+					<td>${comm.commWriter }</td>
+					<td>${comm.commRegDate }</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+
+
+	</table>
+<%@include file="/WEB-INF/inc/footer.jsp" %>
+</body>
+</html>

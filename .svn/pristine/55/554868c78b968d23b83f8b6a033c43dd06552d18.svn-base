@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.comm.dao.ICommDao">
+
+<sql id="search">
+<if test="@org.apache.comm.long3.StringUtils@isBlank(searchWord)">
+	<choose>
+		<when test="searchType=='T'"> AND comm_title LIKE '%'||#{searchWord}||'%'</when>
+		<when test="searchType=='W'"> AND comm_write LIKE '%'||#{searchWord}||'%'</when>  
+		<when test="searchType=='C'"> AND comm_content LIKE '%'||#{searchWord}||'%'</when>    
+	</choose>
+</if>
+</sql>
+
+<select id="getTotalRowCount"
+ parameterType="com.project.comm.vo.CommSearchVO" resultType="int">
+SELECT COUNT(*)
+FROM COMM
+WHERE 1=1
+<include refid="search"/>
+
+</select>
+
+<select id="getCommList" resultType="com.project.comm.vo.CommVO">
+SELECT * FROM (
+		SELECT a.* , rownum as rnum FROM (
+SELECT 
+    to_char(comm_reg_date,'YYYY/MM/DD') AS comm_reg_date
+    , to_char(comm_mod_date,'YYYY/MM/DD') AS comm_mod_date 
+    , comm_no, comm_title, comm_writer
+    , comm_pass, comm_content, comm_hit
+    , comm_del_yn
+FROM COMM
+<include refid="search"/>
+ORDER BY COMM_NO DESC
+) a )
+		WHERE rnum between #{firstRow} and #{lastRow}
+</select>
+
+
+<select id="getComm" parameterType="int" resultType="com.project.comm.vo.CommVO">
+SELECT 
+    to_char(comm_reg_date,'YYYY/MM/DD') AS comm_reg_date
+    , to_char(comm_mod_date,'YYYY/MM/DD') AS comm_mod_date 
+    , comm_no, comm_title, comm_writer
+    , comm_pass, comm_content, comm_hit
+    , comm_del_yn
+FROM COMM
+WHERE COMM_NO = #{commNo}
+</select>
+
+<update id="updateComm" parameterType="com.project.comm.vo.CommVO">
+UPDATE COMM SET
+comm_title = #{commTitle} 
+, comm_content = #{commContent}
+, comm_mod_date = sysdate
+WHERE COMM_NO = #{commNo}
+</update>
+
+<update id="deleteComm" parameterType="com.project.comm.vo.CommVO">
+UPDATE COMM SET
+comm_del_yn = 'Y'
+WHERE COMM_NO = #{commNo}
+</update>
+
+<insert id="insertComm" parameterType="com.project.comm.vo.CommVO">
+<!-- <selectKey keyProperty="commNo" resultType="int" order="BEFORE">
+SELECT commseq.nextval FROM dual
+</selectKey> -->
+INSERT INTO COMM (
+    comm_no, comm_title, comm_writer
+    , comm_pass, comm_content, comm_reg_date
+    , comm_mod_date, comm_hit, comm_del_yn
+) VALUES (
+	COMM_SEQ.NEXTVAL, #{commTitle}, #{commWriter}
+	, #{commPass}, #{commContent}, sysdate
+	, null, 0, 'N'
+)
+</insert>
+
+</mapper>

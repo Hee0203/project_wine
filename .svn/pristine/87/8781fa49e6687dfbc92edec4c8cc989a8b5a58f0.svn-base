@@ -1,0 +1,61 @@
+package com.project.comm.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import com.project.comm.dao.ICommDao;
+import com.project.comm.vo.CommVO;
+import com.project.exception.BizNotEffectedException;
+import com.project.exception.BizNotFoundException;
+import com.project.exception.BizPasswordNotMatchedException;
+
+@Service
+public class CommServiceImpl implements ICommService {
+	
+	@Inject
+	ICommDao commDao;
+	
+	@Override
+	public List<CommVO> getCommList() {
+		// TODO Auto-generated method stub
+		return commDao.getCommList();
+	}
+
+	@Override
+	public CommVO getComm(int commNo) throws BizNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void increaseHit(int commNo) throws BizNotEffectedException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void modifyComm(CommVO comm)
+			throws BizNotFoundException, BizPasswordNotMatchedException, BizNotEffectedException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeComm(CommVO comm)
+			throws BizNotFoundException, BizPasswordNotMatchedException, BizNotEffectedException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void registComm(CommVO comm) throws BizNotEffectedException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	
+}

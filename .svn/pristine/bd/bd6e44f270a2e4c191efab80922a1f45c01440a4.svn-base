@@ -1,0 +1,26 @@
+package com.project.comm.web;
+
+import javax.inject.Inject;
+
+import org.mybatis.logging.Logger;
+import org.mybatis.logging.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.project.comm.service.ICommService;
+
+
+@Controller
+public class CommController {
+	
+	@Inject
+	ICommService CommService;
+
+	@RequestMapping("/comm/commList.wow")
+	public String commList() {
+		return "comm/commList";
+	}
+	
+	
+}

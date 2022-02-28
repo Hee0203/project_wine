@@ -1,0 +1,146 @@
+package com.project.comm.web;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.project.comm.service.ICommService;
+import com.project.comm.vo.CommSearchVO;
+import com.project.comm.vo.CommVO;
+import com.project.common.vo.ResultMessageVO;
+import com.project.exception.BizNotEffectedException;
+import com.project.exception.BizNotFoundException;
+import com.project.exception.BizPasswordNotMatchedException;
+
+@Controller
+public class CommController {
+	
+	@Inject
+	ICommService commService;
+
+	@RequestMapping("/comm/commList.wow")
+	public String commList(Model model, @ModelAttribute("searchVO") CommSearchVO searchVO) {
+		List<CommVO> commList = commService.getCommList(searchVO);
+		model.addAttribute("commList", commList);
+		return "comm/commList";
+	}
+	
+	@RequestMapping("/comm/commView.wow")
+	public String commView(Model model, int commNo) {	
+		try {
+			CommVO comm = commService.getComm(commNo);
+			model.addAttribute("comm", comm);
+			commService.increaseHit(commNo);
+		} catch (BizNotFoundException enf) {
+			ResultMessageVO resultMessageVO = new ResultMessageVO();
+			resultMessageVO.messageSetting(false, "글 찾기 실패", "글 찾기에 실패하였습니다. 해당 글이 없습니다.", "/comm/commList.wow", "목록으로");
+			model.addAttribute("resultMessageVO", resultMessageVO);
+			return "common/message";
+		} catch(BizNotEffectedException ene) {
+			ResultMessageVO resultMessageVO = new ResultMessageVO();
+			resultMessageVO.messageSetting(false, "조회수 증가 실패", "조회수 증가에 실패함", "/comm/commList.wow", "목록으로");
+			model.addAttribute("resultMessageVO", resultMessageVO);
+			return "common/message";
+		}
+		return "comm/commView";
+	}
+	
+	@RequestMapping(value = "/comm/commEdit.wow")
+	public String commEdit(Model model, int commNo) {
+		try {
+			CommVO comm = commService.getComm(commNo);
+			model.addAttribute("comm", comm);
+		} catch (BizNotFoundException enf) {
+			ResultMessageVO resultMessageVO = new ResultMessageVO();
+			resultMessageVO.messageSetting(false, "글 찾기 실패", "글 찾기에 실패하였습니다. 해당 글이 없습니다.", "/comm/commList.wow", "목록으로");
+			model.addAttribute("resultMessageVO", resultMessageVO);
+			return "common/message";
+		}
+		return "comm/commEdit";
+	}
+	
+	@PostMapping(value = "/comm/commModify.wow")
+	public String commModify(Model model, @ModelAttribute("comm") CommVO comm, BindingResult error) throws IOException{
+		try {
+			commService.modifyComm(comm);
+			ResultMessageVO resultMessageVO = new ResultMessageVO();
+			resultMessageVO.messageSetting(true, "글 수정 성공", "글 수정에 성공하였습니다.", "/comm/commList.wow", "목록으로");
+			model.addAttribute("resultMessageVO", resultMessageVO);
+			return "common/message";
+		} catch (BizNotFoundException enf) {
+			ResultMessageVO resultMessageVO = new ResultMessageVO();
+			resultMessageVO.messageSetting(false, "글 찾기 실패", "글 찾기에 실패하였습니다.", "/comm/commList.wow", "목록으로");
+			model.addAttribute("resultMessageVO", resultMessageVO);
+			return "common/message";
+		} catch (BizPasswordNotMatchedException enp) {
+			ResultMessageVO resultMessageVO = new ResultMessageVO();
+			resultMessageVO.messageSetting(false, "글 수정 실패", "비밀번호가 틀렸습니다.", "/comm/commList.wow", "목록으로");
+			model.addAttribute("resultMessageVO", resultMessageVO);
+			return "common/message";
+		} catch (BizNotEffectedException ene) {
+			ResultMessageVO resultMessageVO = new ResultMessageVO();
+			resultMessageVO.messageSetting(false, "수정 실패", "글 수정에 실패하였습니다.", "/comm/commList.wow", "목록으로");
+			model.addAttribute("resultMessageVO", resultMessageVO);
+			return "common/message";
+		}
+	}
+	
+	@PostMapping("/comm/commDelete.wow")
+	public String commDelete(Model model, CommVO comm) {
+		try {
+			commService.removeComm(comm);
+			ResultMessageVO resultMessageVO = new ResultMessageVO();
+			resultMessageVO.messageSetting(true, "글 삭제 성공", "글 삭제에 성공했습니다.", "/comm/commList.wow", "목록으로");
+			model.addAttribute("resultMessageVO", resultMessageVO);
+			return "common/message";
+		} catch (BizNotFoundException enf) {
+			ResultMessageVO resultMessageVO = new ResultMessageVO();
+			resultMessageVO.messageSetting(true, "글 삭제 실패", "글 삭제에 실패했습니다.", "/comm/commList.wow", "목록으로");
+			model.addAttribute("resultMessageVO", resultMessageVO);
+			return "common/message";
+		} catch (BizPasswordNotMatchedException enp) {
+			ResultMessageVO resultMessageVO = new ResultMessageVO();
+			resultMessageVO.messageSetting(true, "글 삭제 실패", "비밀 번호 실패", "/comm/commList.wow", "목록으로");
+			model.addAttribute("resultMessageVO", resultMessageVO);
+			return "common/message";
+		} catch (BizNotEffectedException ene) {
+			ResultMessageVO resultMessageVO = new ResultMessageVO();
+			resultMessageVO.messageSetting(true, "글 삭제 실패", "글 삭제에 실패했습니다.", "/comm/commList.wow", "목록으로");
+			model.addAttribute("resultMessageVO", resultMessageVO);
+			return "common/message";
+		}
+	}
+	
+	@GetMapping("/comm/commForm.wow")
+	public String commForm(Model model, @ModelAttribute("comm") CommVO comm) {
+		
+		return "comm/commForm";
+	}
+	
+	@PostMapping("/comm/commRegist.wow")
+	public String commRegist(Model model, @ModelAttribute("comm") CommVO comm) {
+		try {
+			commService.registComm(comm);
+			ResultMessageVO resultMessageVO = new ResultMessageVO();
+			resultMessageVO.messageSetting(true, "글 등록 성공", "글 등록을 성공하였습니다.", "/comm/commList.wow", "목록으로");
+			model.addAttribute("resultMessageVO", resultMessageVO);
+			return "common/message";
+		} catch (BizNotEffectedException ene) {
+			ResultMessageVO resultMessageVO = new ResultMessageVO();
+			resultMessageVO.messageSetting(false, "글 등록 실패", "글 등록을 실패하였습니다.", "/comm/commList.wow", "목록으로");
+			model.addAttribute("resultMessageVO", resultMessageVO);
+			return "common/message";			
+		}
+	}
+	
+	
+}

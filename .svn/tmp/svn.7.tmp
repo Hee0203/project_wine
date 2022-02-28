@@ -1,0 +1,55 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<%request.setCharacterEncoding("utf-8"); %>
+<%@ include file="/WEB-INF/inc/header.jsp" %>
+</head>
+<body>
+<div class="container">
+	<h3>회원목록</h3>
+	
+	
+	
+	<!-- start :  멤버 리스트 -->
+	<table>
+	<caption>회원목록</caption>
+	<thead>
+		<tr>
+			<td>아이디</td>
+			<td>회원명</td>
+			<td>HP</td>
+			<td>email</td>
+			<td>등록날짜</td>
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach items="${memberList }" var="member">
+			<tr>
+				<td>${member.memId }</td>
+				<td><a href="memberView.wow?memId=${member.memId }">${member.memName }</a></td>
+				<td>${member.memHp }</td>
+				<td>${member.memMail }</td>
+				<td>${member.memJoin }</td>
+			</tr>
+			
+			
+		
+		</c:forEach>
+	</tbody>
+	</table>	
+	
+
+</div>
+
+
+
+
+<%@include file="/WEB-INF/inc/footer.jsp" %>
+</body>
+</html>

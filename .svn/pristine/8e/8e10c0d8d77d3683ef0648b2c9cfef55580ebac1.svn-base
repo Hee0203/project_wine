@@ -1,0 +1,25 @@
+package com.project.qa.web;
+
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+
+import com.project.qa.dao.IQaDao;
+import com.project.qa.service.IQaService;
+
+@Controller
+public class QaController {
+
+	@Inject
+	IQaService qaService;
+	@Autowired
+	IQaDao qaDao;
+	
+	public String qaList(Model model) {
+		return "qa/qaList";
+	}
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.qa.dao.IQaDao">
+
+<sql id="search">
+	<if test="!@org.apache.commons.lang3.StringUtils@isBlank(searchWord)">
+		<choose>
+			<when test="searchType==T">AND qa_title LIKE '%'||#{searchWord}||'%'</when>
+			<when test="searchType==C">AND qa_content LIKE '%'||#{searchWord}||'%'</when>
+		</choose>
+	</if>
+</sql>
+
+
+<select id="getTotalRowCount" parameterType="com.project.qa.vo.QaSearchVO" resultType="int">
+	SELECT count(*)
+	FROM qa
+	WHERE 1 = 1
+	<include refid="search"></include>
+</select>
+
+
+<select id="getqaList" resultType="com.project.qa.vo.QaVO" parameterType="com.project.qa.vo.QaSearchVO">
+	SELECT
+	    to_char(qa_reg_date,'YYYY-MM-DD') AS qa_reg_date
+	  , to_char(qa_mod_date,'YYYY-MM-DD') AS qa_mod_date 
+	  , qa_no, qa_title, qa_writer
+	  , qa_pass, qa_content, qa_reg_date
+	  , qa_mod_date, qa_hit, qa_del_yn
+	FROM qa
+</select>
+
+
+
+</mapper>

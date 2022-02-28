@@ -1,0 +1,43 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div>
+	<h3>Wine View</h3>
+	<table border="1">
+		<tbody>
+			<tr>
+				<th>Wine Name</th>
+			</tr>
+			<tr>
+				<th>${wine.wineKo }&nbsp;(${wine.wineEn })</th>
+				<th><input type="hidden" name="wineNo" value="${wine.wineNo }"> </th>
+			</tr>
+			<tr>
+				<th><img alt="" src="${wine.wineImg }" style="width: 250px;height: 400px;"></th>
+			</tr>
+			<tr>
+				<th>Aroma&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;${wine.wineAroma }</th>
+			</tr>
+			<tr>
+				<th>산도(ACID)&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;${wine.wineAcid }</th>
+			</tr>
+			<tr>
+				<th>당도(SWEET)&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;${wine.wineSweet }</th>
+			</tr>
+			<tr>
+				<th>바디(BODY)&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;${wine.wineBody }</th>
+			</tr>
+			<tr>
+				<th>가격(PRICE)&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;${wine.winePrice }</th>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>

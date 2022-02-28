@@ -1,0 +1,21 @@
+package com.project.main.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class HomeController {
+	
+	@RequestMapping("/main/home.wow")
+	public String home() {
+		
+		return "main/home";
+	}
+	
+	@RequestMapping("/home")
+	public String home23() {
+		
+		return "home";
+	}
+	
+}

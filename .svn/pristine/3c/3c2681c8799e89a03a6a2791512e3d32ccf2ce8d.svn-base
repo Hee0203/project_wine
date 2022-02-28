@@ -1,0 +1,8 @@
+package com.project.login.service;
+
+
+public interface ILoginService {
+	
+	public UserVO getUser(String id);
+	
+}

@@ -1,0 +1,69 @@
+package com.project.qa.vo;
+
+public class QaVO {
+	private int qaNo;                       
+	private String qaTitle;                 
+	private String qaWriter;                
+	private String qaPass;                  
+	private String qaContent;               
+	private String qaRegDate;               
+	private String qaModDate;               
+	private int qaHit;                      
+	private String qaDelYn;
+	
+	public int getQaNo() {
+		return qaNo;
+	}
+	public void setQaNo(int qaNo) {
+		this.qaNo = qaNo;
+	}
+	public String getQaTitle() {
+		return qaTitle;
+	}
+	public void setQaTitle(String qaTitle) {
+		this.qaTitle = qaTitle;
+	}
+	public String getQaWriter() {
+		return qaWriter;
+	}
+	public void setQaWriter(String qaWriter) {
+		this.qaWriter = qaWriter;
+	}
+	public String getQaPass() {
+		return qaPass;
+	}
+	public void setQaPass(String qaPass) {
+		this.qaPass = qaPass;
+	}
+	public String getQaContent() {
+		return qaContent;
+	}
+	public void setQaContent(String qaContent) {
+		this.qaContent = qaContent;
+	}
+	public String getQaRegDate() {
+		return qaRegDate;
+	}
+	public void setQaRegDate(String qaRegDate) {
+		this.qaRegDate = qaRegDate;
+	}
+	public String getQaModDate() {
+		return qaModDate;
+	}
+	public void setQaModDate(String qaModDate) {
+		this.qaModDate = qaModDate;
+	}
+	public int getQaHit() {
+		return qaHit;
+	}
+	public void setQaHit(int qaHit) {
+		this.qaHit = qaHit;
+	}
+	public String getQaDelYn() {
+		return qaDelYn;
+	}
+	public void setQaDelYn(String qaDelYn) {
+		this.qaDelYn = qaDelYn;
+	}       
+	
+}

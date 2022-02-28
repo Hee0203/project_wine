@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.qa.dao.IQaDao">
+
+<sql id="search">
+	<if test="!@org.apache.commons.lang3.StringUtils@isBlank(searchWord)">
+		<choose>
+			<when test="searchType==T">AND qa_title LIKE '%'||#{searchWord}||'%'</when>
+			<when test="searchType==C">AND qa_content LIKE '%'||#{searchWord}||'%'</when>
+		</choose>
+	</if>
+</sql>
+
+
+
+<select id="getTotalRowCount" parameterType="com.project.qa.vo.QaSearchVO" resultType="int">
+	SELECT count(*)
+	FROM qa
+	WHERE 1 = 1
+	<include refid="search"></include>
+</select>
+
+
+<select id="getqaList" resultType="com.project.qa.vo.QaVO" parameterType="com.project.qa.vo.QaSearchVO">	
+	SELECT *
+	FROM (
+	        SELECT rownum as rnum 
+	             , a.*
+	        FROM (
+	        
+	                SELECT to_char(qa_reg_date,'YYYY-MM-DD') AS qa_reg_date
+	                     , to_char(qa_mod_date,'YYYY-MM-DD') AS qa_mod_date 
+	                     , qa_no, qa_title, qa_writer
+	                     , qa_pass, qa_content
+	                     , qa_hit, qa_del_yn
+	                FROM qa
+	                ORDER BY qa_no desc
+	             ) a 
+	        ) 
+	WHERE rnum BETWEEN #{firstRow} and #{lastRow}	
+</select>
+
+<select id="getQa" resultType="com.project.qa.vo.QaVO" parameterType="int" >
+	SELECT
+		to_char(qa_reg_date,'YYYY-MM-DD') AS qa_reg_date,
+		to_char(qa_mod_date,'YYYY-MM-DD') AS qa_mod_date,
+		qa_no, qa_title, qa_writer,
+		qa_pass, qa_content, qa_reg_date,
+		qa_mod_date, qa_hit, qa_del_yn
+	FROM qa
+	WHERE qa_no = #{qaNo}
+</select>
+
+<update id="updateQa" parameterType="com.project.qa.vo.QaVO">
+	UPDATE qa
+	SET
+	    qa_title = #{qaTitle},
+	    qa_content = #{qaContent},
+	    qa_mod_date = sysdate
+	WHERE
+	    qa_no = #{qaNo}
+</update>
+
+<update id="deleteQa" parameterType="com.project.qa.vo.QaVO">
+	UPDATE qa SET
+		qa_del_yn = 'Y'
+	WHERE
+		qa_no = #{qaNo}
+</update>
+
+<insert id="insertQa" parameterType="com.project.qa.vo.QaVO">
+	INSERT INTO qa (
+	    qa_no, qa_title, qa_writer
+	    , qa_pass, qa_content, qa_reg_date
+	    , qa_mod_date, qa_hit, qa_del_yn
+	) VALUES (
+		qa_seq.nextval, #{qaTitle}, #{qaWriter},
+		#{qaPass}, #{qaContent}, sysdate,
+		null, 0, 'N'
+	)
+</insert>
+
+<update id="increaseHit" parameterType="int">
+	UPDATE qa SET
+		qa_hit = qa_hit + 1
+	WHERE
+		qa_no = #{qaNo}
+</update>
+
+
+
+
+
+
+</mapper>

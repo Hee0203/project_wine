@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.wine.dao.IWineDao">
+
+<sql id="search">
+	<if test="!@org.apache.commons.lang3.StringUtils@isBlank(searchWord)">
+		<choose>
+			<when test="searchType==T">AND wine_ko LIKE '%'||#{searchWord}||'%'</when>
+			<when test="searchType==T">AND wine_en LIKE '%'||#{searchWord}||'%'</when>
+		</choose>
+	</if>
+</sql>
+
+<select id="getTotalRowCount" parameterType="com.project.wine.vo.WineVO" resultType="int">
+	SELECT count(*)
+	FROM wine
+	WHERE 1 = 1
+	<include refid="search"></include>
+</select>
+
+<select id="getWineList" resultType="com.project.wine.vo.WineVO" parameterType="com.project.wine.vo.WineSearchVO">
+	SELECT
+	    wine_no, wine_cd, wine_ko
+	  , wine_en, wine_price, wine_ml
+	  , wine_img, wine_nation
+	FROM
+	    wine
+</select>
+
+<select id="getWine" resultType="com.project.wine.vo.WineVO" parameterType="int">
+	SELECT
+	    a.wine_no as s_wine_no, wine_cd, wine_ko
+	  , wine_en, wine_price, wine_ml
+	  , wine_img, wine_nation
+	  , wine_acid, wine_sweet
+	  , wine_body, wine_aroma
+	FROM wine a
+	   , wine_view b
+	WHERE a.wine_no = b.wine_no
+	AND a.wine_no = #{wineNo}
+</select>
+
+<select id="getRecommendList" resultType="com.project.wine.vo.WineVO" parameterType="com.project.wine.vo.WineVO">
+<![CDATA[
+select * 
+from
+(select a.wine_no, a.wine_ko, a.wine_en, a.wine_img, a.wine_acid, a.wine_sweet, a.wine_body 
+    from 
+        (select a.wine_no, wine_ko, wine_en, wine_img, wine_acid, wine_sweet, wine_body from wine a, wine_view b where a.wine_no = b.wine_no) a, 
+        (select s_mem_id, wine_no, wine_acid, wine_sweet, wine_body, wine_aroma from wine_view a, search b where a.wine_no = b.s_wine_no and b.s_mem_id = #{sMemId}) b
+    where a.wine_acid = b.wine_acid and a.wine_sweet = b.wine_sweet and a.wine_body = b.wine_body
+    order by dbms_random.value)
+where rownum <= 3
+]]>
+</select>
+
+<insert id="insertRecommend" parameterType="com.project.wine.vo.WineVO">
+	INSERT INTO SEARCH VALUES(
+		#{sMemId}, #{sWineNo}
+	)
+</insert>
+
+<update id="updateRecommend" parameterType="com.project.wine.vo.WineVO">
+	UPDATE SEARCH SET
+	S_WINE_NO = #{sWineNo}
+	WHERE S_MEM_ID = #{sMemId}
+</update>
+
+<select id="getWineRecommend" parameterType="String" resultType="String">
+	SELECT s_mem_id FROM search 
+	where s_mem_id= #{sMemId}
+</select>
+
+<select id="getWineListMore" resultType="com.project.wine.vo.WineVO" parameterType="com.project.wine.vo.WineSearchVO">
+	<include refid="common.prePage"></include>
+	SELECT
+	    wine_no, wine_cd, wine_ko
+	  , wine_en, wine_price, wine_ml
+	  , wine_img, wine_nation
+	FROM
+	    wine
+	ORDER BY wine_no desc
+	<include refid="common.postPage"></include>
+</select>
+
+<select id="getNotLoginRecommend" resultType="com.project.wine.vo.WineVO">
+	<![CDATA[
+		select *
+		from(select a.wine_no, a.wine_ko, a.wine_en, a.wine_img, b.wine_acid, b.wine_sweet, b.wine_body 
+			from wine a, wine_view b 
+			where a.wine_no = b.wine_no
+			order by dbms_random.value)
+		where rownum <= 3
+	]]>
+</select>
+
+
+</mapper>

@@ -1,0 +1,35 @@
+.comm_table th, .qa_table th{
+	width:100px;
+}
+.comm_table td, .qa_table td{
+	width: 300px;
+}
+.comm_table, .qa_table{
+	width: 1000px;
+	text-align: center;
+}
+#pass{
+	width: 300px;
+}
+#btn_div{
+	text-align: right;
+	margin-bottom: 20px;
+	margin-right: 460px;
+	
+}
+#pass_alarm{
+	font-size: 13px;
+}
+#commContent, #qaContent{
+	width: 100%;
+	height: 500px;
+}
+#commTitle, #qaTitle{
+	width: 600px;
+	height:50px;
+}
+#btn_save, #btn_list {
+	background: black;
+	border:black;
+	border-radius: 5px;
+}

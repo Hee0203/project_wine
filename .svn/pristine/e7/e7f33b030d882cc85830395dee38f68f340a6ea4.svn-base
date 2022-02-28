@@ -1,0 +1,71 @@
+package com.project.qa.web;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.project.exception.BizNotFoundException;
+import com.project.qa.dao.IQaDao;
+import com.project.qa.service.IQaService;
+import com.project.qa.vo.QaSearchVO;
+import com.project.qa.vo.QaVO;
+
+@Controller
+public class QaController {
+
+	@Inject
+	IQaService qaService;
+		
+	@RequestMapping("/qa/qaList.wow")
+	public String qaList(Model model, @ModelAttribute("searchVO") QaSearchVO searchVO) {
+		List<QaVO> qaList = qaService.getQaList(searchVO);
+		model.addAttribute("qaList", qaList);
+		return "qa/qaList";
+	}
+	
+	@RequestMapping("/qa/qaView.wow")
+	public String qaView(Model model, int qaNo) {
+		try {
+			QaVO qa = qaService.getQa(qaNo);
+			model.addAttribute("qa", qa);
+			
+		} catch (BizNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "qa/qaView";
+	}
+	
+	@RequestMapping("/qa/qaEdit.wow")
+	public String qaEdit(Model model, int qaNo) {
+		QaVO qa;
+		try {
+			qa = qaService.getQa(qaNo);
+			model.addAttribute("qa", qa);
+		} catch (BizNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "qa/qaEdit";
+	}
+	
+	
+	
+	@RequestMapping("/qa/qaForm.wow")
+	public String qaForm(Model model, @ModelAttribute("qa") QaVO qa) {
+		return "qa/qaForm";
+	}
+	
+	
+	
+	
+	
+	
+	
+}
